@@ -38,24 +38,21 @@ function knightMoves (startCor, endCor) {
   return "invalid cordinates, coordinate has to be an array [x, y]";
 
   const queue = [startCor];
-  let stops = [];
-  let end = false;
-  let stepsToIncement = 0;
+  // const stops = [];
 
-  while (end === false) {
+  
+
+  while (queue.length) {
     let currentCor = queue.shift();
     let key = board.legalMoves[JSON.stringify(currentCor)];
-    
+    // movesToTarget++;
 
     for (let i = 0; i < key.length; i++) {
-      if (key[i][0] === endCor[0] && key[i][1] === endCor[1]) return movesToTarget
-      else {
-        queue.push(key[i]);
-        if (stepsToIncement <= 0)
-      };
+      if (key[i][0] === endCor[0] && key[i][1] === endCor[1]) return ++movesToTarget
+      else queue.push(key[i]);
     }
   }
-
+  
   return movesToTarget;
 };
 
@@ -69,3 +66,9 @@ function knightMoves (startCor, endCor) {
 // if so, return the original start point, the new start point and the end point;
 // if not, push all possible outputs for this startpoint to the queue and pop it off,
 // repeat again for the new first item in the queue (this item will have been a child of the original start point);
+
+
+// Keeping track of moves;
+// at the start of the first loop, set the countdown to incement steps to the length of the edgelist;
+// with each iteration through the inner loop of the key in the queue loop, if coordinates match, increment the movesToTarget variable and return;
+// else, 
