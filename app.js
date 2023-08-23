@@ -40,16 +40,23 @@ function knightMoves (startCor, endCor) {
   const queue = [startCor];
   // const stops = [];
 
-  
+ let incrementCountDown = 0;
 
   while (queue.length) {
     let currentCor = queue.shift();
     let key = board.legalMoves[JSON.stringify(currentCor)];
-    // movesToTarget++;
+    
+    if (incrementCountDown === 0) {
+      movesToTarget++;
+      incrementCountDown += currentCor.length;
+    };
 
     for (let i = 0; i < key.length; i++) {
       if (key[i][0] === endCor[0] && key[i][1] === endCor[1]) return ++movesToTarget
-      else queue.push(key[i]);
+      else {
+        queue.push(key[i]);
+        incrementCountDown--;
+      }
     }
   }
   
@@ -71,4 +78,7 @@ function knightMoves (startCor, endCor) {
 // Keeping track of moves;
 // at the start of the first loop, set the countdown to incement steps to the length of the edgelist;
 // with each iteration through the inner loop of the key in the queue loop, if coordinates match, increment the movesToTarget variable and return;
-// else, 
+// else, set a variable 
+
+// let incrementCountDown = 0;
+// let nextLvlLength = key.forEach(item => incrementCountDown += item.length);
