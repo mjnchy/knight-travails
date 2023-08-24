@@ -36,41 +36,43 @@ function knightMoves (startCor, endCor) {
   return "invalid paramneters, coordinates have to be arrays [x, y]";
 
   const queue = [startCor];
-  const pred = {};
+  const visited = {};
+  const predObj = {};
   const movesArr = [];
 
   while (queue.length) {
-    let currentCor = queue.shift();
-    let key = board.legalMoves[JSON.stringify(currentCor)];
+    const currentCor = queue.shift();
+    const key = board.legalMoves[JSON.stringify(currentCor)];
 
     for (let i = 0; i < key.length; i++) {
-      pred[key[i]] = currentCor;
+      if (visited[key[i]] === true) continue;
 
-      if (key[i][0] === endCor[0] && key[i][1] === endCor[1]) {
-        let output = key[i];
-        movesArr.push(output);
+      visited[key[i]] = true;
+      predObj[key[i]] = currentCor;
 
-        let end = false;
-
-        while (end === false) {
-          output = pred[output];
-          movesArr.push(output);
-          
-          if (output[0] === startCor[0] && output[1] === startCor[1]) {
-            end = true;
+      if (key[i][0] !== endCor[0] || key[i][1] !== endCor[1]) queue.push(key[i])
+      else {
+        let loop = true;
+        let result = key[i];
+        movesArr.push(result);
+        
+        while (loop === true) {
+          if (result[0] === startCor[0] && result[1] === startCor[1]) {
+            console.log(result);
+            loop = false;
             break;
-          };
+          } else {
+            result = predObj[result];
+            movesArr.push(result);
+          }
         }
 
         queue.length = 0;
         break;
-      } else queue.push(key[i]);
+      }
     }
   }
-  
-  let msg = `You made it in ${movesArr.length - 1} moves. Here is your path:`
-
-  return msg;
+  return movesArr;
 };
 
 
@@ -83,3 +85,27 @@ function knightMoves (startCor, endCor) {
 // if so, return the original start point, the new start point and the end point;
 // if not, push all possible outputs for this startpoint to the queue and pop it off,
 // repeat again for the new first item in the queue (this item will have been a child of the original start point);
+// while (queue.length) {
+//   const currentCor = queue.shift();
+//   const key = board.legalMoves[JSON.stringify(currentCor)];
+//
+//   for (let i = 0; i < key.length; i++) {
+//     if (visited[key[i]] == true) break
+//
+//     predObj[key[i]] = currentCor;
+//     visited[key[i]] = true;
+//
+//     if (key[i][0] === endCor[0] && key[i][1] === endCor[1]) {
+//       let loop = true;
+//       let required = key[i];
+//       movesArr.push(required);
+//
+//       while (loop === true) {
+//         if (required[0] === startCor[0] && required[1] === startCor[1]) return movesArr
+//
+//         required = predObj[required];
+//         movesArr.push(required);
+//       }
+//     } queue.push(key[i])
+//   }
+// }
