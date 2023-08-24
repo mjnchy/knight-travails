@@ -34,13 +34,15 @@ const board = {coordinates: {}, legalMoves: {}};
 function knightMoves (startCor, endCor) {
   if (!Array.isArray(startCor) || !Array.isArray(endCor) ||startCor.length !== 2 || endCor.length !== 2)
   return "invalid paramneters, coordinates have to be arrays [x, y]";
+  if (startCor[0] === endCor[0] && startCor[1] === endCor[1]) return 0;
 
   const queue = [startCor];
   const visited = {};
   const predObj = {};
   const movesArr = [];
+  let loopOuter = true;
 
-  while (queue.length) {
+  while (loopOuter === true) {
     const currentCor = queue.shift();
     const key = board.legalMoves[JSON.stringify(currentCor)];
 
@@ -65,12 +67,15 @@ function knightMoves (startCor, endCor) {
             movesArr.push(result);
           };
         }
-        queue.length = 0;
+        loopOuter = false;
         break;
       }
     }
   }
-  return movesArr;
+
+  let msg = `You made it in ${movesArr.length - 1} moves. Here is your path: ${JSON.stringify(movesArr.reverse()).slice(1, -1)}`
+
+  return msg;
 };
 
 
