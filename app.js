@@ -58,15 +58,13 @@ function knightMoves (startCor, endCor) {
         
         while (loop === true) {
           if (result[0] === startCor[0] && result[1] === startCor[1]) {
-            console.log(result);
             loop = false;
             break;
           } else {
             result = predObj[result];
             movesArr.push(result);
-          }
+          };
         }
-
         queue.length = 0;
         break;
       }
