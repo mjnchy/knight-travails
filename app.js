@@ -88,27 +88,3 @@ function knightMoves (startCor, endCor) {
 // if so, return the original start point, the new start point and the end point;
 // if not, push all possible outputs for this startpoint to the queue and pop it off,
 // repeat again for the new first item in the queue (this item will have been a child of the original start point);
-// while (queue.length) {
-//   const currentCor = queue.shift();
-//   const key = board.legalMoves[JSON.stringify(currentCor)];
-//
-//   for (let i = 0; i < key.length; i++) {
-//     if (visited[key[i]] == true) break
-//
-//     predObj[key[i]] = currentCor;
-//     visited[key[i]] = true;
-//
-//     if (key[i][0] === endCor[0] && key[i][1] === endCor[1]) {
-//       let loop = true;
-//       let required = key[i];
-//       movesArr.push(required);
-//
-//       while (loop === true) {
-//         if (required[0] === startCor[0] && required[1] === startCor[1]) return movesArr
-//
-//         required = predObj[required];
-//         movesArr.push(required);
-//       }
-//     } queue.push(key[i])
-//   }
-// }
