@@ -32,35 +32,28 @@ const board = {coordinates: {}, legalMoves: {}};
 })();
 
 function knightMoves (startCor, endCor) {
-  let movesToTarget = 0;
-
   if (!Array.isArray(startCor) && !Array.isArray(endCor) && startCor.length !== 2 && endCor.length !== 2) 
   return "invalid cordinates, coordinate has to be an array [x, y]";
 
   const queue = [startCor];
-  // const stops = [];
+  const stops = [];
 
- let incrementCountDown = 0;
+  let end = false;
 
-  while (queue.length) {
+  while (end === false) {
     let currentCor = queue.shift();
     let key = board.legalMoves[JSON.stringify(currentCor)];
-    
-    if (incrementCountDown === 0) {
-      movesToTarget++;
-      incrementCountDown += currentCor.length;
-    };
 
     for (let i = 0; i < key.length; i++) {
-      if (key[i][0] === endCor[0] && key[i][1] === endCor[1]) return ++movesToTarget
-      else {
-        queue.push(key[i]);
-        incrementCountDown--;
+      if (key[i][0] === endCor[0] && key[i][1] === endCor[1]) {
+        end = true;
+        break;
       }
+      else queue.push(key[i]);
     }
   }
   
-  return movesToTarget;
+  return stops;
 };
 
 
@@ -73,12 +66,3 @@ function knightMoves (startCor, endCor) {
 // if so, return the original start point, the new start point and the end point;
 // if not, push all possible outputs for this startpoint to the queue and pop it off,
 // repeat again for the new first item in the queue (this item will have been a child of the original start point);
-
-
-// Keeping track of moves;
-// at the start of the first loop, set the countdown to incement steps to the length of the edgelist;
-// with each iteration through the inner loop of the key in the queue loop, if coordinates match, increment the movesToTarget variable and return;
-// else, set a variable 
-
-// let incrementCountDown = 0;
-// let nextLvlLength = key.forEach(item => incrementCountDown += item.length);
